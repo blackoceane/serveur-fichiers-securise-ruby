@@ -1,6 +1,6 @@
 require "openssl"
 
-SHA_KEY = "DFkkjhjkfghdrtuJhjfgkhj7676tYEtyut67587buig67O0jObuy7i6"
+SHA_KEY = ENV.fetch("SHA_KEY", "cle-de-developpement-a-changer")
 
 def sha256(value)
   nil if value.nil? || value.empty?

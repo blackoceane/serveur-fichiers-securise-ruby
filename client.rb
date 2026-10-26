@@ -19,7 +19,7 @@ data = {
   password: "demo",
  options:"flip",
  #options: '{"flip": true, "font": "small"}',
-  original_file: Faraday::Multipart::FilePart.new("toto.txt", "text/plain")
+  original_file: Faraday::Multipart::FilePart.new("exemple.txt", "text/plain")
 }
 
 puts "=== CREATION fichier  ==="

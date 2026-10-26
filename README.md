@@ -1,24 +1,42 @@
-# ECHANGE-DE-DONNEES-I
+# Serveur de fichiers sécurisé (Ruby)
 
-## Description du projet
-Ce projet consiste en la création d'un serveur de stockage de fichiers sécurisé via une API REST. Il permet aux utilisateurs authentifiés de téléverser des fichiers, de les protéger par mot de passe et de transformer leur contenu (via des filtres textuels). Le système utilise une persistance de données en format JSON et une interface de galerie HTML dynamique.
+API REST de stockage de fichiers : les utilisateurs authentifiés téléversent des fichiers, les protègent par mot de passe et leur appliquent des filtres de texte. Une galerie HTML affiche les fichiers.
+
+## Technologies
+
+Ruby, Sinatra, Puma, API REST, JSON, HTML, hachage SHA-256 (HMAC)
 
 ## Fonctionnalités
-- **Authentification Basic HTTP** : Système de connexion sécurisé avec hachage SHA-256 des mots de passe pour protéger l'accès à l'API.
-- **Galerie Web** : Interface front-end simple permettant de visualiser la liste des fichiers, d'identifier ses propres fichiers et d'accéder aux fichiers protégés via un prompt de mot de passe.
-- **Upload** : Téléversement de fichiers avec génération d'UUID uniques.
-- **Transformation** : Application de filtres  au contenu textuel lors de la création.
-- **Protection** : Possibilité d'ajouter, modifier ou retirer un mot de passe sur un fichier spécifique .
-- **Suppression** : Retrait définitif des fichiers par l'utilisateur  propriétaire.
 
-## Objectifs
+- Authentification HTTP Basic, mots de passe hachés en SHA-256
+- Routes REST : GET, POST, PATCH, DELETE, avec les codes 201, 204, 403 et 404
+- Téléversement de fichiers avec identifiant unique (UUID)
+- Mot de passe optionnel par fichier : ajout, modification, retrait
+- Seul le propriétaire d'un fichier peut le modifier ou le supprimer
+- Filtres appliqués au contenu texte
+- Données enregistrées dans un fichier JSON
 
-- **Sécurisation des données** : Garantir que seul le propriétaire d'un fichier peut le modifier ou le supprimer.
-- **Manipulation d'API REST** : Implémenter les méthodes standard (GET, POST, PATCH, DELETE) avec les codes de statut HTTP appropriés (201, 204, 403, 404).
-- **Persistance légère** : Gérer la lecture et l'écriture asynchrone dans un fichier JSON servant de base de données.
+## Sécurité
 
- ## Problemes
- - Difficultée d éxecuter plusieurs filtres sur un fichier reçu
+La clé secrète utilisée pour le hachage est lue depuis la variable d'environnement `SHA_KEY`. Une valeur de développement est utilisée si elle n'est pas définie ; en production, il faut toujours définir sa propre clé.
 
- -------------------------------------------------------------------------------------------------------------------------------
- CONÇU LE 05 DECEMBRE 2025 - 22 DECEMBRE 2025
+## Lancer le projet
+
+Prérequis : Ruby 3 et l'outil `toilet` pour les filtres (`sudo apt install toilet` sous Linux).
+
+    ruby serveur.rb
+
+Le serveur démarre sur http://localhost:4567. Les gemmes nécessaires s'installent automatiquement au premier lancement.
+
+Pour tester l'API avec le client fourni (il envoie le fichier `exemple.txt`) :
+
+    ruby client.rb
+
+Comptes de test : alice / pwda, bob / pwdb, charlie / pwdc, dave / pwdd
+
+## Améliorations prévues
+
+- Appliquer plusieurs filtres de suite sur un même fichier
+
+---
+Projet réalisé en décembre 2025 dans le cours Échange de données I, Cégep de Shawinigan.
